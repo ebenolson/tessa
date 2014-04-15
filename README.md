@@ -1,7 +1,6 @@
 # tessa
 =====
 A collection of Python modules for calculation of various texture features.
-------------------------------
 
 # Features
 
