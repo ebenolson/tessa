@@ -29,7 +29,7 @@ def otsu(counts):
     if np.isnan(sigma_b_squared).all():
         pos = 0
     else:
-        pos = mean((sigma_b_squared == maxval).nonzero())+1
+        pos = np.mean((sigma_b_squared == maxval).nonzero())+1
     return pos
 
 
@@ -37,19 +37,19 @@ def otsurec(I, ttotal):
     if I == []:
         T = []
     else:
-        I = I.astype(uint8).flatten()
+        I = I.astype(np.uint8).flatten()
 
         num_bins = 256
         counts = np.histogram(I, range(num_bins))[0]
 
-        T = zeros((ttotal, 1))
+        T = np.zeros((ttotal, 1))
 
         def otsurec_helper(lowerBin, upperBin, tLower, tUpper):
             if ((tUpper < tLower) or (lowerBin >= upperBin)):
                 return
             level = otsu(counts[int(np.ceil(lowerBin))-1:int(np.ceil(upperBin))]) + lowerBin
 
-            insertPos = np.ceil((tLower + tUpper) / 2.)
+            insertPos = int(np.ceil((tLower + tUpper) / 2.))
             T[insertPos-1] = level / num_bins
             otsurec_helper(lowerBin, level, tLower, insertPos - 1)
             otsurec_helper(level + 1, upperBin, insertPos + 1, tUpper)
@@ -59,21 +59,21 @@ def otsurec(I, ttotal):
 
 
 def hausDim(I):
-    maxDim = np.max(shape(I))
-    newDimSize = 2**np.ceil(np.log2(maxDim))
-    rowPad = newDimSize - shape(I)[0]
-    colPad = newDimSize - shape(I)[1]
+    maxDim = np.max(np.shape(I))
+    newDimSize = int(2**np.ceil(np.log2(maxDim)))
+    rowPad = newDimSize - np.shape(I)[0]
+    colPad = newDimSize - np.shape(I)[1]
 
     I = np.pad(I, ((0, rowPad), (0, colPad)), 'constant')
 
-    boxCounts = np.zeros(np.ceil(np.log2(maxDim))+1)
-    resolutions = np.zeros(np.ceil(np.log2(maxDim))+1)
+    boxCounts = np.zeros(int(np.ceil(np.log2(maxDim)))+1)
+    resolutions = np.zeros(int(np.ceil(np.log2(maxDim)))+1)
 
-    iSize = shape(I)[0]
+    iSize = np.shape(I)[0]
     boxSize = 1
     idx = 0
     while boxSize <= iSize:
-        boxCount = sum(I > 0)
+        boxCount = (I > 0).sum()
         idx = idx + 1
         boxCounts[idx-1] = boxCount
         resolutions[idx-1] = 1./boxSize
@@ -85,12 +85,12 @@ def hausDim(I):
 
 
 def sfta(I, nt):
-    if len(shape(I)) == 3:
-        I = mean(I, 2)
-    elif len(shape(I)) != 2:
+    if len(np.shape(I)) == 3:
+        I = np.mean(I, 2)
+    elif len(np.shape(I)) != 2:
         raise ImageDimensionError
 
-    I = I.astype(uint8)
+    I = I.astype(np.uint8)
 
     T = otsurec(I, nt)
     dSize = len(T)*6
@@ -101,11 +101,11 @@ def sfta(I, nt):
         Ib = I > (thresh*255)
         Ib = findBorders(Ib)
 
-        vals = I[Ib.nonzero()].astype(double)
+        vals = I[Ib.nonzero()].astype(np.double)
         D[pos] = hausDim(Ib)
         pos += 1
 
-        D[pos] = mean(vals)
+        D[pos] = np.mean(vals)
         pos += 1
 
         D[pos] = len(vals)
@@ -118,11 +118,11 @@ def sfta(I, nt):
         Ib = (I > (lowerThresh*255)) * (I < (upperThresh*255))
         Ib = findBorders(Ib)
 
-        vals = I[Ib.nonzero()].astype(double)
+        vals = I[Ib.nonzero()].astype(np.double)
         D[pos] = hausDim(Ib)
         pos += 1
 
-        D[pos] = mean(vals)
+        D[pos] = np.mean(vals)
         pos += 1
 
         D[pos] = len(vals)
