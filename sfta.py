@@ -2,6 +2,8 @@ import numpy as np
 
 
 def mrange(start, step, end):
+    """mimic behavior of MATLAB's range function
+    """
     def gen(start, step, end):
         n = start
         while n <= end:

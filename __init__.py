@@ -1,2 +1,3 @@
 from dictionary import RandomPatchSoftThreshold
 from sfta import SegmentationFractalTextureAnalysis
+from chog import CircularHistogramOfGradients

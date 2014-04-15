@@ -1,8 +1,7 @@
 # tessa
-=====
 A collection of Python modules for calculation of various texture features.
 
-# Features
+## Features
 
 Tessa can calculates features using these methods:
 
@@ -13,15 +12,15 @@ Tessa can calculates features using these methods:
 * **TODO** ~~BGP (Binary Gabor Patterns)~~
 * **TODO** ~~CHOG (Circular Histogram of Gradients)~~
 
-# Requirements
+## Requirements
 
-Tessa is written and tested for Python 2.7, and requires numpy >= 1.8
+Tessa is written and tested for Python 2.7, and requires numpy >= 1.8 and scipy >= 0.13.3. The examples also depend on scikit-learn for classification.
 
-# Usage
+## Usage
 
 **TODO**
 
-# Acknowledgments and citations
+## Acknowledgments and citations
 
 Christoph Gohlke's excellent [tifffile](http://www.lfd.uci.edu/~gohlke/code/tifffile.py.html) code is included for reading and writing image data.
 
