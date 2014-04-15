@@ -21,7 +21,7 @@ Tessa is written and tested for Python 2.7, and requires numpy >= 1.8
 
 **TODO**
 
-# Acknowledgements and citations
+# Acknowledgments and citations
 
 Christoph Gohlke's excellent [tifffile](http://www.lfd.uci.edu/~gohlke/code/tifffile.py.html) code is included for reading and writing image data.
 
