@@ -8,10 +8,10 @@ Tessa can calculates features using these methods:
 
 * **SFTA** (Segmentation-based Fractal Texture Analysis)
 * **RPST** (Random Patch Dictionary with Soft Thresholding)
-* **TODO** --LPQ (Local Phase Quantization)--
-* **TODO** --RZM (Regional Zernike Moments)--
-* **TODO** --BGP (Binary Gabor Patterns)--
-* **TODO** --CHOG (Circular Histogram of Gradients)--
+* **TODO** ~~LPQ (Local Phase Quantization)~~
+* **TODO** ~~RZM (Regional Zernike Moments)~~
+* **TODO** ~~BGP (Binary Gabor Patterns)~~
+* **TODO** ~~CHOG (Circular Histogram of Gradients)~~
 
 # Requirements
 
