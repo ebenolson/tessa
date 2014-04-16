@@ -10,7 +10,7 @@ def ring_kernel(params, sh):
     """
     x = np.arange(sh[1])-sh[1]/2
     y = np.arange(sh[0])-sh[0]/2
-    r = sqrt(y[:, np.newaxis]**2+x[np.newaxis, :]**2)
+    r = np.sqrt(y[:, np.newaxis]**2+x[np.newaxis, :]**2)
 
     r0, s = params
     kernel = np.exp(-(r-r0)**2/(2*s**2))
@@ -60,18 +60,18 @@ def chog_imgs(img):
     output = np.zeros((len(param_sets),)+np.shape(Fourier_coefficients), dtype='complex')
 
     for i, params in enumerate(param_sets):
-        wf = ring(params, shape(img))
-        tmp = fftshift(ifft2(fft2(Fourier_coefficients)*fft2(wf)))
+        wf = ring_kernel(params, np.shape(img))
+        tmp = np.fft.fftshift(np.fft.ifft2(np.fft.fft2(Fourier_coefficients)*np.fft.fft2(wf)))
         output[i, :, :, :] = tmp/(abs(tmp)+1e-9)
 
     return output
 
 
 def histfeat(chog_imgs, x, y, R=16):
-    nw, nd, h, w = np.shape(fims)
+    nw, nd, h, w = np.shape(chog_imgs)
 
     output = chog_imgs[:, :, y-R:y+R, x-R:x+R]
-    features = array([np.sum((np.floor((np.real(output)+1)*32) == i), axis=(2, 3)) for i in range(64)]).flatten()
+    features = np.array([np.sum((np.floor((np.real(output)+1)*32) == i), axis=(2, 3)) for i in range(64)]).flatten()
     return features
 
 
